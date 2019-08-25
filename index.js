@@ -6,7 +6,7 @@ const API_DOMAIN = 'apis.justwatch.com';
 
 class JustWatch {
 	constructor(options) {
-		this._options = Object.assign({locale:'en_US'}, options);
+		this._options = Object.assign({locale:'es_ES'}, options);
 	}
 
 	request(method, endpoint, params) {
