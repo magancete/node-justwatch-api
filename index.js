@@ -146,7 +146,7 @@ class JustWatch {
 		let res = await this.search(options);			
 		let id = await res.items[0].id
 		const locale = encodeURIComponent(this._options.locale);
-		let data = await this.request('GET', '/titles/movie/'+id+'/locale/'+locale));			
+		let data = await this.request('GET', '/titles/movie/'+id+'/locale/'+locale);			
 		return data;				
 	}
 
