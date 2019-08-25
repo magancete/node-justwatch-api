@@ -143,20 +143,25 @@ class JustWatch {
 	}
 	
 	async getTitleProviders(options={}) {
+		
+		return new Promise((resolve, reject) => {
 							
-		let res = this.search(options);
+			let res = this.search(options);
+
+			res.then(function(result) {
+
+				let id = res.items[0].id
+
+				const locale = encodeURIComponent(this._options.locale);
+
+				return resolve(this.request('GET', '/titles/movie/'+id+'/locale/'+locale));
+
+			}, function(err) {
+			    console.log(err);
+				return resolve()
+			});
 		
-		res.then(function(result) {
-			
-			let id = res.items[0].id
-		
-			const locale = encodeURIComponent(this._options.locale);
-		
-			return await this.request('GET', '/titles/movie/'+id+'/locale/'+locale);
-			
-	        }, function(err) {
-		    console.log(err);
-	        });	
+		})
 		
 	}
 
