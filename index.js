@@ -143,53 +143,14 @@ class JustWatch {
 	}
 	
 	async getTitleProviders(options={}) {
+				
+		let res = this.search(options);
 		
-		if(typeof options === 'string') {
-			options = {query: options};
-		}
-		else {
-			options = Object.assign({}, options);
-		}
-		// build default params
-		const params = {
-			'content_types': null,
-			'presentation_types': null,
-			'providers': null,
-			'genres': null,
-			'languages': null,
-			'release_year_from': null,
-			'release_year_until': null,
-			'monetization_types': null,
-			'min_price': null,
-			'max_price': null,
-			'scoring_filter_types': null,
-			'cinema_release': null,
-			'query': null,
-			'page': null,
-			'page_size': null
-		};
-		const paramKeys = Object.keys(params);
-		// validate options
-		for(const key in options) {
-			if(paramKeys.indexOf(key) === -1) {
-				throw new Error("invalid option '"+key+"'");
-			}
-			else {
-				params[key] = options[key];
-			}
-		}
-		// send request
+		let id = res.items[0].id
+		
 		const locale = encodeURIComponent(this._options.locale);
 		
-		const asyncExample = async () => {
-		  return await this.request('POST', '/titles/'+locale+'/popular', params)
-		};
-		
-		asyncExample().then(res => {
-		  return await this.getTitle('movie', res.items[0].id);
-		})
-		.catch(err => console.error(err))		
-						
+		return await this.request('GET', '/titles/movie/'+id+'/locale/'+locale);
 	}
 
 	async getTitle(content_type, title_id) {
