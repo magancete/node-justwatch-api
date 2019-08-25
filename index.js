@@ -143,14 +143,21 @@ class JustWatch {
 	}
 	
 	async getTitleProviders(options={}) {
-				
+							
 		let res = this.search(options);
 		
-		let id = res.items[0].id
+		res.then(function(result) {
+			
+			let id = res.items[0].id
 		
-		const locale = encodeURIComponent(this._options.locale);
+			const locale = encodeURIComponent(this._options.locale);
 		
-		return await this.request('GET', '/titles/movie/'+id+'/locale/'+locale);
+			return await this.request('GET', '/titles/movie/'+id+'/locale/'+locale);
+			
+	        }, function(err) {
+		    console.log(err);
+	        });	
+		
 	}
 
 	async getTitle(content_type, title_id) {
